@@ -19,6 +19,11 @@ const (
 	ASSIGN = "="
 	PLUS   = "+"
 	MINUS  = "-"
+	BANG = "!"
+	ASTRISK = "*"
+	SLASH = "/"
+	LT = "<"
+	GT = ">"
 
 	// Delimiters
 	COMMA     = ","

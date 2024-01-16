@@ -7,49 +7,16 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `=+(){},;`
-
-	tests := []struct {
-		expectedType token.TokenType
-		expectedLiteral string
-	}{
-		{token.ASSIGN, "="},
-		{token.PLUS, "+"},
-		{token.LPAREN, "("},
-		{token.RPAREN, ")"},
-		{token.LBRACE, "{"},
-		{token.RBRACE, "}"},
-		{token.COMMA, ","},
-		{token.SEMICOLON, ";"},
-	}
-
-	// Create a new lexer
-	l := New(input)
-
-	for i, tt := range tests {
-		// Get the next token
-		tok := l.NextToken()
-
-		// Check the type of the token
-		if tok.Type != tt.expectedType {
-			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q", 
-				i, tt.expectedType, tok.Type)
-		}
-
-		// Check the literal value of the token
-		if tok.Literal != tt.expectedLiteral {
-			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q", 
-				i, tt.expectedLiteral, tok.Literal)
-		}
-	}
-
-	input  = `let five = 5;
+	input  := `let five = 5;
 			let ten = 10;
 			let add = fn(x, y) {
 			x + y;
 			};
-			let result = add(five, ten);`
-	tests = []struct {
+			let result = add(five, ten);
+			!-/*5;
+			5 < 10 > 5;`
+
+	tests := []struct {
 		expectedType token.TokenType
 		expectedLiteral string
 	}{
@@ -89,9 +56,21 @@ func TestNextToken(t *testing.T) {
 		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
+		{token.BANG, "!"},
+		{token.MINUS, "-"},
+		{token.SLASH, "/"},
+		{token.ASTRISK, "*"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		{token.INT, "5"},
+		{token.LT,"<"},
+		{token.INT, "10"},
+		{token.GT,">"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
 	}
 
-	l = New(input)
+	l := New(input)
 
 	for i, tt := range tests {
 		// Get the next token
