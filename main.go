@@ -10,7 +10,7 @@ import (
 
 func main() {
 	user, err := user.Current()
-	if err!=nil {
+	if err != nil {
 		panic(err)
 	}
 
